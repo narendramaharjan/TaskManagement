@@ -4,7 +4,7 @@ SODING: INDIVIDUAL ASSIGNMENT
 
 # Technical Overview
 
-This repository is developed on Asp.net MVC 5 for Task management web appliation. In this system, User can perform below actions:
+This repository is developed on Asp.net MVC 5 for Task management web application. In this system, User can perform below actions:
 
 1. Create Task
 2. Edit Task
