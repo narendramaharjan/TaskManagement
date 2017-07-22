@@ -16,7 +16,7 @@ This repository is developed on Asp.net MVC 5 for Task management web appliation
 # Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-## Sytem Requirement
+## System Requirement
 1. Visual Studio 2013 or above
 2. Microsoft SQL Server
 
