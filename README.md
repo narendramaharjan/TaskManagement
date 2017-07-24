@@ -26,7 +26,12 @@ These instructions will get you a copy of the project up and running on your loc
 
 1. Download Zip file or clone the repository.
 2. Build application to restore all Nuget Dependencies packages.
-3. Run the project.
+3. Change # connectionString on web.config file
+3. Migrate Db through Visual studio Package Manager Console with below commands
+  a. Enable-Migrations
+  b. Add-Migration "Initial migration"
+  c. Update-Database
+4. Run the project.
 
 
 ## Author
