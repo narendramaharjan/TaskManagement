@@ -50,13 +50,13 @@
     <Compile Include="Repositories\TaskRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\AnnalectIO.DomainModel\AnnalectIO.DomainModel.csproj">
       <Project>{7B42B76E-D2FA-44C8-A52E-8E7F7EC96857}</Project>
       <Name>AnnalectIO.DomainModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
