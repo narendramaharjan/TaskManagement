@@ -1,5 +1,6 @@
 ﻿using AnnalectIO.Data.Infrastructure;
 using AnnalectIO.DomainModel.Task;
+using Assignment.Utilities;
 using Dapper;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,8 @@ namespace AnnalectIO.Data.Repositories
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    CommonLoggerHelper.LogException(ex); throw ex;
+                    
                 }
                 finally
                 {
@@ -52,7 +54,7 @@ namespace AnnalectIO.Data.Repositories
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    CommonLoggerHelper.LogException(ex); throw ex;
                 }
                 finally
                 {
@@ -79,7 +81,7 @@ namespace AnnalectIO.Data.Repositories
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    CommonLoggerHelper.LogException(ex); throw ex;
                 }
                 finally
                 {
@@ -111,7 +113,7 @@ namespace AnnalectIO.Data.Repositories
                     catch (Exception ex)
                     {
                         tran.Rollback();
-                        throw ex;
+                        CommonLoggerHelper.LogException(ex); throw ex;
                     }
                     finally
                     {
@@ -136,7 +138,7 @@ namespace AnnalectIO.Data.Repositories
                 catch (Exception ex)
                 {
                     tran.Rollback();
-                    throw ex;
+                    CommonLoggerHelper.LogException(ex); throw ex;
                 }
                 finally
                 {
@@ -157,7 +159,7 @@ namespace AnnalectIO.Data.Repositories
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    CommonLoggerHelper.LogException(ex); throw ex;
                 }
                 finally
                 {

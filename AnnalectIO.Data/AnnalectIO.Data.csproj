@@ -54,6 +54,10 @@
       <Project>{7B42B76E-D2FA-44C8-A52E-8E7F7EC96857}</Project>
       <Name>AnnalectIO.DomainModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Assignment.Utilities\Assignment.Utilities.csproj">
+      <Project>{85D61954-9786-4BB3-9995-9AC7F2786FCA}</Project>
+      <Name>Assignment.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

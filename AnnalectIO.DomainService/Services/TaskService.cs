@@ -1,4 +1,5 @@
 ﻿using AnnalectIO.DomainModel.Task;
+using Assignment.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace AnnalectIO.DomainService.Services
             }
             catch (Exception ex)
             {
-                throw ex;
+                CommonLoggerHelper.LogException(ex); throw ex;
             }
         }
 
@@ -35,7 +36,7 @@ namespace AnnalectIO.DomainService.Services
             }
             catch (Exception ex)
             {
-                throw ex;
+                CommonLoggerHelper.LogException(ex); throw ex;
             }
         }
 
@@ -47,7 +48,7 @@ namespace AnnalectIO.DomainService.Services
             }
             catch (Exception ex)
             {
-                throw ex;
+                CommonLoggerHelper.LogException(ex); throw ex;
             }
         }
 
@@ -60,7 +61,7 @@ namespace AnnalectIO.DomainService.Services
             }
             catch (Exception ex)
             {
-                throw ex;
+                CommonLoggerHelper.LogException(ex); throw ex;
             }
         }
 
@@ -72,7 +73,7 @@ namespace AnnalectIO.DomainService.Services
             }
             catch (Exception ex)
             {
-                throw ex;
+                CommonLoggerHelper.LogException(ex); throw ex;
             }
         }
 
