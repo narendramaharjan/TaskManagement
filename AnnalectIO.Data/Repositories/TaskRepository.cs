@@ -21,73 +21,103 @@ namespace AnnalectIO.Data.Repositories
 
         public async Task<IEnumerable<TaskModel>> GetAll()
         {
-            try
-            {
-                var sqlQuery = @"SELECT * FROM [dbo].[Tasks]";
-                var result = await SqlMapper.QueryAsync<TaskModel>(_connectionFactory.GetConnection, sqlQuery).ConfigureAwait(false);
-                return result;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+            using (var connection = _connectionFactory.GetConnection) {
+                try
+                {
+                    var sqlQuery = @"SELECT * FROM [dbo].[Tasks]";
+                    var result = await SqlMapper.QueryAsync<TaskModel>(connection, sqlQuery).ConfigureAwait(false);
+                    return result;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    connection.Close();
+                    connection.Dispose();
+                }
             }
         }
 
         public async Task<TaskModel> GetById(Guid id)
         {
-            try
+            using (var connection = _connectionFactory.GetConnection)
             {
-                var sqlQuery = @"SELECT * FROM [dbo].[Tasks] where Id = @id";
-                var result = await SqlMapper.QueryAsync<TaskModel>(_connectionFactory.GetConnection, sqlQuery, new { id = id }).ConfigureAwait(false);
-                return result.FirstOrDefault();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                try
+                {
+                    var sqlQuery = @"SELECT * FROM [dbo].[Tasks] where Id = @id";
+                    var result = await SqlMapper.QueryAsync<TaskModel>(connection, sqlQuery, new { id = id }).ConfigureAwait(false);
+                    return result.FirstOrDefault();
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    connection.Close();
+                    connection.Dispose();
+                }
             }
         }
 
         public async Task ExecuteSP(TaskModel task)
         {
-            try
+            using (var connection = _connectionFactory.GetConnection)
             {
-                var query = "USP_UpdateTask";
-                var param = new DynamicParameters();
-                param.Add("@Id", Guid.NewGuid());
-                param.Add("@Name", task.Name);
-                param.Add("@Description", task.Description);
-                param.Add("@DateCreated", DateTime.UtcNow);
+                try
+                {
+                    var query = "USP_UpdateTask";
+                    var param = new DynamicParameters();
+                    param.Add("@Id", Guid.NewGuid());
+                    param.Add("@Name", task.Name);
+                    param.Add("@Description", task.Description);
+                    param.Add("@DateCreated", DateTime.UtcNow);
 
-                await SqlMapper.ExecuteAsync(_connectionFactory.GetConnection, query, param, commandType: CommandType.StoredProcedure);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                    await SqlMapper.ExecuteAsync(_connectionFactory.GetConnection, query, param, commandType: CommandType.StoredProcedure);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    connection.Close();
+                    connection.Dispose();
+                }
             }
         }
 
         public async Task Create(TaskModel task)
         {
-            IDbConnection connection = _connectionFactory.GetConnection;
-            using (IDbTransaction tran = connection.BeginTransaction())
+            using (var connection = _connectionFactory.GetConnection)
             {
-                try
+                using (IDbTransaction tran = connection.BeginTransaction())
                 {
-                    var sqlQuery = "INSERT INTO Tasks (Id, Name, Description, DateCreated) VALUES (@Id, @Name, @Description, @DateCreated)";
-                    object param = new
+                    try
                     {
-                        Id = Guid.NewGuid(),
-                        Name = task.Name,
-                        Description = task.Description,
-                        DateCreated = DateTime.UtcNow
-                    };
-                    var result = await SqlMapper.QueryAsync<TaskModel>(connection, sqlQuery, param, transaction: tran).ConfigureAwait(false);
-                    tran.Commit();
-                }
-                catch (Exception ex)
-                {
-                    tran.Rollback();
-                    throw ex;
+                        var sqlQuery = "INSERT INTO Tasks (Id, Name, Description, DateCreated) VALUES (@Id, @Name, @Description, @DateCreated)";
+                        object param = new
+                        {
+                            Id = Guid.NewGuid(),
+                            Name = task.Name,
+                            Description = task.Description,
+                            DateCreated = DateTime.UtcNow
+                        };
+                        var result = await SqlMapper.QueryAsync<TaskModel>(connection, sqlQuery, param, transaction: tran).ConfigureAwait(false);
+                        tran.Commit();
+                    }
+                    catch (Exception ex)
+                    {
+                        tran.Rollback();
+                        throw ex;
+                    }
+                    finally
+                    {
+                        connection.Close();
+                        connection.Dispose();
+                    }
                 }
             }
         }
@@ -108,19 +138,32 @@ namespace AnnalectIO.Data.Repositories
                     tran.Rollback();
                     throw ex;
                 }
+                finally
+                {
+                    connection.Close();
+                    connection.Dispose();
+                }
             }
         }
 
         public async Task Delete(Guid id)
         {
-            try
+            using (var connection = _connectionFactory.GetConnection)
             {
-                var sqlQuery = @"DELETE * FROM Tasks where Id = @id";
-                await SqlMapper.ExecuteAsync(_connectionFactory.GetConnection, sqlQuery, new { id = id }).ConfigureAwait(false);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
+                try
+                {
+                    var sqlQuery = @"DELETE * FROM Tasks where Id = @id";
+                    await SqlMapper.ExecuteAsync(_connectionFactory.GetConnection, sqlQuery, new { id = id }).ConfigureAwait(false);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+                finally
+                {
+                    connection.Close();
+                    connection.Dispose();
+                }
             }
         }
     }
